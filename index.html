@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense App</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <section class="card welcome">
+      <div>
+        <h1>Привет!</h1>
+        <p>Что ты сегодня потратил?</p>
+      </div>
+      <button class="btn btn-dark">Перейти к расходам</button>
+    </section>
+
+    <section class="card stats">
+      <div class="chart"></div>
+
+      <div class="pill blue">💸 Онлайн покупки</div>
+      <div class="pill purple">🛒 Магазины</div>
+      <div class="pill green">🍽 Рестораны</div>
+      <div class="pill red">📺 Подписки</div>
+
+      <button class="btn btn-yellow">+ Добавить расход</button>
+    </section>
+
+    <section class="card settings">
+      <div class="gear">⚙️</div>
+      <h2>Настройки</h2>
+      <button class="btn btn-dark">Помощь</button>
+    </section>
+
+    <section class="card add">
+      <h2>Добавить расход</h2>
+      <input type="number" placeholder="Сумма" />
+      <select>
+        <option>Категория</option>
+        <option>Покупки</option>
+        <option>Еда</option>
+        <option>Подписки</option>
+      </select>
+      <button class="btn btn-dark">Сохранить</button>
+    </section>
+
+  </div>
+</body>
+</html>
