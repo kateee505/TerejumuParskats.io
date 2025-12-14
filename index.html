@@ -1,51 +1,121 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="lv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expense App</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tēriņu Pārskats</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app">
 
-    <section class="card welcome">
-      <div>
-        <h1>Привет!</h1>
-        <p>Что ты сегодня потратил?</p>
-      </div>
-      <button class="btn btn-dark">Перейти к расходам</button>
-    </section>
+<div class="app">
 
-    <section class="card stats">
-      <div class="chart"></div>
+  <!-- WELCOME -->
+  <section class="card welcome">
+    <h1>Sveiki!</h1>
+    <p>Ko tu esi iztērējis?</p>
+    <button class="btn btn-dark" onclick="goToChart()">
+      Uz tēriņu pārskatu
+    </button>
+  </section>
 
-      <div class="pill blue">💸 Онлайн покупки</div>
-      <div class="pill purple">🛒 Магазины</div>
-      <div class="pill green">🍽 Рестораны</div>
-      <div class="pill red">📺 Подписки</div>
+  <!-- CHART -->
+  <section class="card stats" id="chart">
+    <h2>Tēriņu sadalījums</h2>
+    <div class="chart" id="pie"></div>
+    <button class="btn btn-yellow" onclick="openModal()">
+      + Pievienot tēriņus
+    </button>
+  </section>
 
-      <button class="btn btn-yellow">+ Добавить расход</button>
-    </section>
+  <!-- SETTINGS -->
+  <section class="card settings">
+    <h2>Iestatījumi</h2>
+    <button class="btn btn-dark" onclick="openHelp()">
+      Palīdzība
+    </button>
+  </section>
 
-    <section class="card settings">
-      <div class="gear">⚙️</div>
-      <h2>Настройки</h2>
-      <button class="btn btn-dark">Помощь</button>
-    </section>
+</div>
 
-    <section class="card add">
-      <h2>Добавить расход</h2>
-      <input type="number" placeholder="Сумма" />
-      <select>
-        <option>Категория</option>
-        <option>Покупки</option>
-        <option>Еда</option>
-        <option>Подписки</option>
-      </select>
-      <button class="btn btn-dark">Сохранить</button>
-    </section>
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">×</span>
+    <h3>Pievienot tēriņus</h3>
 
+    <input type="number" id="amount" placeholder="Summa €">
+    <select id="category">
+      <option value="Pirkumi">Pirkumi</option>
+      <option value="Ēdiens">Ēdiens</option>
+      <option value="Abonementi">Abonementi</option>
+    </select>
+
+    <button class="btn btn-dark" onclick="addExpense()">
+      Saglabāt
+    </button>
   </div>
+</div>
+
+<!-- HELP PAGE (FAKE PAGE) -->
+<div class="help" id="help">
+  <h1>Mēs nezinām, kā jums palīdzēt</h1>
+  <button class="btn btn-dark" onclick="closeHelp()">Atgriezties</button>
+</div>
+
+<script>
+let data = {
+  Pirkumi: 0,
+  Ēdiens: 0,
+  Abonementi: 0
+};
+
+function openModal() {
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function addExpense() {
+  const amount = +document.getElementById('amount').value;
+  const category = document.getElementById('category').value;
+
+  if (!amount) return;
+
+  data[category] += amount;
+  updateChart();
+  closeModal();
+}
+
+function updateChart() {
+  const total = data.Pirkumi + data.Ēdiens + data.Abonementi;
+  if (total === 0) return;
+
+  const p1 = data.Pirkumi / total * 100;
+  const p2 = data.Ēdiens / total * 100;
+
+  document.getElementById('pie').style.background =
+    `conic-gradient(
+      #60a5fa 0% ${p1}%,
+      #4ade80 ${p1}% ${p1 + p2}%,
+      #f87171 ${p1 + p2}% 100%
+    )`;
+}
+
+function goToChart() {
+  document.getElementById('chart').scrollIntoView({behavior:'smooth'});
+}
+
+function openHelp() {
+  document.getElementById('help').style.display = 'flex';
+}
+
+function closeHelp() {
+  document.getElementById('help').style.display = 'none';
+}
+</script>
+
 </body>
 </html>
